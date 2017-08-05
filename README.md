@@ -56,6 +56,11 @@ String:
 Match::string('12345***0ab***f', '1234567890abcdef'); //true          
 ```
 
+Custom "any symbol":
+```php
+Match::string('12345***0ab***f', '1234567890abcdef', '%%%'); //false
+```
+
 Case:
 ```php
 $processingResult = Match::case('user@company2.com')
