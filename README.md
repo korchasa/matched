@@ -1,12 +1,12 @@
 # Simple pattern matching for PHP 
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/korchasa/matched.svg?style=flat-square)](https://packagist.org/packages/korchasa/matched)
-[![Build Status](https://travis-ci.org/korchasa/matched.svg?style=flat-square)](https://travis-ci.org/korchasa/matched)
+[![Latest Stable Version](https://img.shields.io/packagist/v/korchasa/Match.svg?style=flat-square)](https://packagist.org/packages/korchasa/Match)
+[![Build Status](https://travis-ci.org/korchasa/Match.svg?style=flat-square)](https://travis-ci.org/korchasa/Match)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.0-8892BF.svg?style=flat-square)](https://php.net/)
 
 ## Install:
 ```bash
-composer require korchasa/matched
+composer require korchasa/Match
 ```
 
 ## Usage:
@@ -15,17 +15,17 @@ Use *** for "any value".
 
 Functions or class:
 ```php
-matched_array([ 'foo' => [ 'any' => '***' ] ], $someArray); 
-Matched::array([ 'foo' => [ 'any' => '***' ] ], $someArray);
+match_array([ 'foo' => [ 'any' => '***' ] ], $someArray); 
+Match::array([ 'foo' => [ 'any' => '***' ] ], $someArray);
 ```
 
 Arrays:
 ```php
 $someArray = [ 'foo' => [ 'any' => 11 ] ];
-matched_array([ 'foo' => [ 'any' => '***' ]], $someArray); //true
-matched_array([ 'foo' => [], $someArray); //true
-matched_array([ 'foo' => [ 'not_any' => 13 ]], $someArray); //false (missed key foo.not_any)
-matched_array([ 'foo' => [ 'any' => 12 ]], $someArray); //false (not equals values foo.any)
+Match::array([ 'foo' => [ 'any' => '***' ]], $someArray); //true
+Match::array([ 'foo' => [], $someArray); //true
+Match::array([ 'foo' => [ 'not_any' => 13 ]], $someArray); //false (missed key foo.not_any)
+Match::array([ 'foo' => [ 'any' => 12 ]], $someArray); //false (not equals values foo.any)
 ```
 
 JSON:
@@ -39,7 +39,7 @@ $someJson = '{
     ]
 }';
 
-matched_json('{
+Match::json('{
         "foo": "bar",
         "baz": "***",
         "items": [
@@ -53,12 +53,12 @@ matched_json('{
 
 String:
 ```php
-matched_string('12345***0ab***f', '1234567890abcdef'); //true          
+Match::string('12345***0ab***f', '1234567890abcdef'); //true          
 ```
 
 Case:
 ```php
-$processingResult = Matched::case('user@company2.com')
+$processingResult = Match::case('user@company2.com')
     ->string('***@company1.com', function($val) { return $this->processCompany1Email($val); })
     ->string('***@company2.com', function($val) { return $this->processCompany2Email($val); })
     ->default(function ($val) { return $this->processUsualEmails($val); });

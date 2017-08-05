@@ -2,4 +2,4 @@ parameters:
 	excludes_analyse:
 		- %rootDir%/src/matched_funcs.php
 	ignoreErrors:
-		- '#Function matched_.* not found#'
+		- '#Function match_.* not found#'

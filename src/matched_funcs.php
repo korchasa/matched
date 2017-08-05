@@ -1,6 +1,6 @@
 <?php
 
-use korchasa\matched\Matched;
+use korchasa\matched\Match;
 
 /**
  * @param string $pattern_json
@@ -9,13 +9,13 @@ use korchasa\matched\Matched;
  * @param callable|null $failure_callback
  * @return bool
  */
-function matched_json(
+function match_json(
     string $pattern_json,
     $actual_json,
-    string $any_symbol = Matched::ANY_SYMBOL,
+    string $any_symbol = Match::ANY_SYMBOL,
     callable $failure_callback = null
 ) :bool {
-    return Matched::json(...func_get_args());
+    return Match::json(...func_get_args());
 }
 
 /**
@@ -25,13 +25,13 @@ function matched_json(
  * @param callable|null $failure_callback
  * @return bool
  */
-function matched_array(
+function match_array(
     array $pattern,
     $actual,
-    string $any_symbol = Matched::ANY_SYMBOL,
+    string $any_symbol = Match::ANY_SYMBOL,
     callable $failure_callback = null
 ) :bool {
-    return Matched::array(...func_get_args());
+    return Match::array(...func_get_args());
 }
 
 /**
@@ -41,11 +41,11 @@ function matched_array(
  * @param callable|null $failure_callback
  * @return bool
  */
-function matched_string(
+function match_string(
     string $pattern,
     $actual,
-    string $any_symbol = Matched::ANY_SYMBOL,
+    string $any_symbol = Match::ANY_SYMBOL,
     callable $failure_callback = null
 ) :bool {
-    return Matched::string(...func_get_args());
+    return Match::string(...func_get_args());
 }

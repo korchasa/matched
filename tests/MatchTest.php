@@ -2,10 +2,10 @@
 
 namespace korchasa\matched\Tests;
 
-use korchasa\matched\Matched;
+use korchasa\matched\Match;
 use PHPUnit\Framework\TestCase;
 
-class MatchedTest extends TestCase
+class MatchTest extends TestCase
 {
     /**
      * @param $pattern
@@ -15,7 +15,7 @@ class MatchedTest extends TestCase
      */
     public function testArray(array $pattern, $actual, bool $result)
     {
-        $this->assertEquals($result, Matched::array($pattern, $actual));
+        $this->assertEquals($result, Match::array($pattern, $actual));
     }
 
     public function arrayProvider()
@@ -73,7 +73,7 @@ class MatchedTest extends TestCase
      */
     public function testJson(string $pattern, $actual, bool $result)
     {
-        $this->assertEquals($result, Matched::json($pattern, $actual));
+        $this->assertEquals($result, Match::json($pattern, $actual));
     }
 
     public function jsonProvider()
@@ -123,7 +123,7 @@ class MatchedTest extends TestCase
     public function testJsonWithCustomSymbol()
     {
         $this->assertTrue(
-            Matched::json(
+            Match::json(
                 '{                  
                     "items": [
                         "%some_value%",
@@ -149,7 +149,7 @@ class MatchedTest extends TestCase
      */
     public function testString(string $pattern, $actual, bool $result)
     {
-        $this->assertEquals($result, Matched::string($pattern, $actual));
+        $this->assertEquals($result, Match::string($pattern, $actual));
     }
 
     public function stringProvider()

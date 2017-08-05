@@ -2,7 +2,7 @@
 
 namespace korchasa\matched;
 
-class Matched
+class Match
 {
     const ANY_SYMBOL = '***';
 
