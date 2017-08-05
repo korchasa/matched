@@ -1,0 +1,45 @@
+{
+    "name": "korchasa/php-app-blueprint",
+    "license": "MIT",
+	"authors": [
+		{
+			"name": "korchasa",
+			"email": "korchasa@gmail.com"
+		}
+	],
+    "require": {
+        "sebastian/diff": "^2.0"
+    },
+	"require-dev": {
+        "php": ">=7.0",
+        "phpunit/phpunit": "^6.0",
+        "phpstan/phpstan": "*",
+        "sebastian/phpcpd": "*",
+        "squizlabs/php_codesniffer": "*"
+	},
+    "autoload": {
+        "psr-4": {
+            "korchasa\\matched\\": "src/"
+        },
+        "files": [
+            "src/matched_funcs.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "korchasa\\matched\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "check-loop": "while sleep 10; do clear && printf '\\e[3J' && composer run-script check ; done",
+        "check": [
+            "@unit",
+            "@analyze",
+            "@style"
+        ],
+        "style": "phpcs --standard=PSR2 src tests",
+        "analyze": "phpstan analyse -c ./.phpstan.neon -l5 src tests",
+        "unit": "phpunit",
+        "style-fix": "phpcbf --standard=PSR2 src tests"
+    }
+}
