@@ -6,7 +6,7 @@
 
 ## Install:
 ```bash
-composer require korchasa/Match
+composer require korchasa/matched
 ```
 
 ## Usage:
