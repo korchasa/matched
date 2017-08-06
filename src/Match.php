@@ -60,16 +60,19 @@ class Match
             }
 
             if (is_array($value)) {
-                return static::array($value, $actual[$key], $any_symbol, $failure_callback);
+                if (!static::array($value, $actual[$key], $any_symbol, $failure_callback)) {
+                    return false;
+                }
             } else {
                 $result = $value === $actual[$key] || $any_symbol === $value;
                 if (!$result) {
-                    $failure_callback($value, $actual[$key], 'Given value not match pattern');
+                    $failure_callback($value, $actual[$key], "Given value of `$value` not match pattern");
+                    return false;
                 }
-
-                return $result;
             }
         }
+
+        return true;
     }
 
     public static function string(

@@ -58,7 +58,7 @@ class MatchTest extends TestCase
                 ],
                 [
                     'foo' => [ 'any' => 11 ],
-                    'baz' => 42
+                    'baz'
                 ],
                 true
             ]
@@ -113,6 +113,36 @@ class MatchTest extends TestCase
                     "items": [
                         { "a2": "b2", "c2": 22 },
                         { "z": "x", "c": 3 }    
+                    ]
+                }',
+                false
+            ],
+            'missed key items.a' => [
+                '{
+                    "baz": {
+                        "value": 1
+                    },
+                    "items": [
+                        { 
+                            "a": "b",
+                            "c": 2
+                        },
+                        "***"  
+                    ]
+                }',
+                '{
+                    "baz": {
+                        "value": 1
+                    },
+                    "items": [
+                        { 
+                            "a2": "b2",
+                            "c2": 22
+                        },
+                        { 
+                            "z": "x",
+                            "c": 3
+                        }    
                     ]
                 }',
                 false

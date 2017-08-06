@@ -4,8 +4,6 @@ namespace korchasa\matched;
 
 trait AssertMatchedTrait
 {
-
-
     /**
      * Проверка для частичного сравнения json
      *
@@ -36,8 +34,8 @@ trait AssertMatchedTrait
         self::assertJson((string) $pattern, 'Pattern must be a valid JSON');
         self::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
 
-        $constraint = new JsonMatchedConstraint((string) $pattern);
+        $constraint = new JsonConstraint((string) $pattern);
 
         self::assertThat((string) $actual, $constraint, $message);
-    }//end assertJsonMatched()
+    }
 }
