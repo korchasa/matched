@@ -1,12 +1,12 @@
 # Simple pattern matching for PHP 
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/korchasa/Match.svg?style=flat-square)](https://packagist.org/packages/korchasa/Match)
-[![Build Status](https://travis-ci.org/korchasa/Match.svg?style=flat-square)](https://travis-ci.org/korchasa/Match)
+[![Latest Stable Version](https://img.shields.io/packagist/v/korchasa/matcho.svg?style=flat-square)](https://packagist.org/packages/korchasa/matcho)
+[![Build Status](https://travis-ci.org/korchasa/matcho.svg?style=flat-square)](https://travis-ci.org/korchasa/matcho)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.0-8892BF.svg?style=flat-square)](https://php.net/)
 
 ## Install:
 ```bash
-composer require korchasa/matched
+composer require korchasa/matcho
 ```
 
 ## Usage:
