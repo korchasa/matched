@@ -7,7 +7,7 @@ use PHPUnit\Framework\ExpectationFailedException;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 
-class JsonConstraint extends Constraint
+class ArrayConstraint extends Constraint
 {
     /**
      * @var object
@@ -15,9 +15,9 @@ class JsonConstraint extends Constraint
     protected $pattern;
 
     /**
-     * @param string $pattern
+     * @param array $pattern
      */
-    public function __construct($pattern = null)
+    public function __construct(array $pattern = null)
     {
         parent::__construct();
         $this->pattern = $pattern;
@@ -32,10 +32,10 @@ class JsonConstraint extends Constraint
      */
     public function evaluate(
         $other,
-        $description = 'Failed asserting that json matched pattern',
+        $description = 'Failed asserting that array matched pattern',
         $returnResult = false
     ) {
-        return Match::json($this->pattern, $other, Match::ANY_SYMBOL, function ($expected, $actual, $message) {
+        return Match::array($this->pattern, $other, Match::ANY_SYMBOL, function ($expected, $actual, $message) {
             $diffBuilder = new UnifiedDiffOutputBuilder("--- Original\n+++ Actual\n");
             $diff = (new Differ($diffBuilder))->diff(var_export($expected, true), var_export($actual, true));
             throw new ExpectationFailedException($message."\n".$diff);
@@ -48,7 +48,7 @@ class JsonConstraint extends Constraint
     public function toString()
     {
         return sprintf(
-            'matches JSON string "%s"',
+            'matches array "%s"',
             $this->pattern
         );
     }

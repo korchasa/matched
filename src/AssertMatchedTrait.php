@@ -31,11 +31,21 @@ trait AssertMatchedTrait
      */
     public static function assertJsonMatched($pattern, $actual, $message = '')
     {
-        self::assertJson((string) $pattern, 'Pattern must be a valid JSON');
-        self::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
+        static::assertJson((string) $pattern, 'Pattern must be a valid JSON');
+        static::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
 
         $constraint = new JsonConstraint((string) $pattern);
 
-        self::assertThat((string) $actual, $constraint, $message);
+        static::assertThat((string) $actual, $constraint, $message);
+    }
+
+    public static function assertStringMatched($pattern, $actual, $message = '')
+    {
+        static::assertIn((string) $pattern, 'Pattern must be a valid JSON');
+        static::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
+
+        $constraint = new JsonConstraint((string) $pattern);
+
+        static::assertThat((string) $actual, $constraint, $message);
     }
 }
