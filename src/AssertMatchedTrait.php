@@ -5,23 +5,23 @@ namespace korchasa\matched;
 trait AssertMatchedTrait
 {
     /**
-     * Проверка для частичного сравнения json
+     * Reports an error identified by $message if $actual JSON string is not matched $pattern.
      *
-     * Если важно и наличи и содержимое, то в петтерне указывается значение
-     * Если важно наличие узла, но не важно содержимое, то в паттерне указывается "*any*"
-     * Если не важно ни наличие, ни содержимое элемента, то его не нужно указывать в паттерне
+     * If both the presence and the value are important, then place the value in the pattern
+     * If only the presence of a field is important, then place the "***" in the pattern
+     * If both the presence and the value are NOT important, then do not place anything in pattern
      *
      * @example assertJsonMatched(
      *          '{
-     *              "foo": "*any*", - проверять только наличие
-     *              "bar": 42 - проверять и наличие и значение
+     *              "foo": "***", // check only presence
+     *              "bar": 42 // check presence and value
      *          }',
      *          '{
      *              "foo": {
      *                  "baz": 1
      *              },
      *              "bar": 42,
-     *              "baz": "foo" - не проверяется вообще
+     *              "baz": "foo" // do not check at all
      *          }'
      * )
      *
@@ -29,7 +29,7 @@ trait AssertMatchedTrait
      * @param string|object $actual
      * @param string        $message
      */
-    public static function assertJsonMatched($pattern, $actual, $message = '')
+    public static function assertJsonMatched($pattern, $actual, string $message = '')
     {
         static::assertJson((string) $pattern, 'Pattern must be a valid JSON');
         static::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
@@ -39,12 +39,60 @@ trait AssertMatchedTrait
         static::assertThat((string) $actual, $constraint, $message);
     }
 
-    public static function assertStringMatched($pattern, $actual, $message = '')
+    /**
+     * Reports an error identified by $message if $actual array is not matched $pattern.
+     *
+     * If both the presence and the value are important, then place the value in the pattern
+     * If only the presence of a field is important, then place the "***" in the pattern
+     * If both the presence and the value are NOT important, then do not place anything in pattern
+     *
+     * @example assertArrayMatched(
+     *          [
+     *              "foo" => "***", // check only presence
+     *              "bar" => 42 // check presence and value
+     *          ],
+     *          [
+     *              "foo" => [
+     *                  "baz" => 1
+     *              ],
+     *              "bar" => 42,
+     *              "baz" => "foo" // do not check at all
+     *          ]
+     * )
+     *
+     * @param array|object $pattern
+     * @param array|object $actual
+     * @param string        $message
+     */
+    public static function assertArrayMatched($pattern, $actual, string $message = '')
     {
-        static::assertIn((string) $pattern, 'Pattern must be a valid JSON');
-        static::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
+        static::assertInternalType('array', (array) $pattern, 'Pattern must be a array');
+        static::assertInternalType('array', (array) $actual, 'Actual must be a array');
 
-        $constraint = new JsonConstraint((string) $pattern);
+        $constraint = new ArrayConstraint((array) $pattern);
+
+        static::assertThat((array) $actual, $constraint, $message);
+    }
+
+    /**
+     * Reports an error identified by $message if $actual JSON string is not matched $pattern.
+     *
+     * If both the presence and the value are important, then place the value in the pattern
+     * If only the presence of a field is important, then place the "***" in the pattern
+     * If both the presence and the value are NOT important, then do not place anything in pattern
+     *
+     * @example assertStringMatched('cu***mber', 'cucumber')
+     *
+     * @param string|object $pattern
+     * @param string|object $actual
+     * @param string        $message
+     */
+    public static function assertStringMatched($pattern, $actual, string $message = '')
+    {
+        static::assertInternalType('string', (string) $pattern, 'Pattern must be a string');
+        static::assertInternalType('string', (string) $actual, 'Actual must be a string');
+
+        $constraint = new StringConstraint((string) $pattern);
 
         static::assertThat((string) $actual, $constraint, $message);
     }
