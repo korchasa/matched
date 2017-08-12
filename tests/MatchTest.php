@@ -61,6 +61,11 @@ class MatchTest extends TestCase
                     'baz'
                 ],
                 true
+            ],
+            'with in string pattern' => [
+                [ 'string' => 'a***c' ],
+                [ 'string' => "ac" ],
+                true
             ]
         ];
     }

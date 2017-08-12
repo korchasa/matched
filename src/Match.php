@@ -64,8 +64,7 @@ class Match
                     return false;
                 }
             } else {
-                $result = $value === $actual[$key] || $any_symbol === $value;
-                if (!$result) {
+                if (!static::isScalarEqual($value, $actual[$key], $any_symbol)) {
                     $failure_callback($value, $actual[$key], "Given value of `$value` not match pattern");
                     return false;
                 }
@@ -108,5 +107,18 @@ class Match
         }
 
         return (bool) $result;
+    }
+
+    private static function isScalarEqual($pattern, $actual, $anySymbol)
+    {
+        if ($anySymbol === $pattern || $pattern === $actual) {
+            return true;
+        }
+
+        if (is_string($pattern) && false !== strpos($pattern, $anySymbol) && static::string($pattern, $actual)) {
+            return true;
+        }
+
+        return false;
     }
 }
