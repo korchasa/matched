@@ -8,7 +8,8 @@
 		}
 	],
     "require": {
-        "sebastian/diff": "^2.0"
+        "sebastian/diff": "^2.0",
+        "roave/security-advisories": "dev-master"
     },
 	"require-dev": {
         "php": ">=7.0",
@@ -31,10 +32,11 @@
         }
     },
     "scripts": {
-        "check-loop": "while sleep 10; do clear && printf '\\e[3J' && composer run-script check ; done",
+        "check-loop": "while sleep 5; do clear && composer run-script check ; done",
         "check": [
             "@unit",
             "@analyze",
+            "@style-fix",
             "@style"
         ],
         "style": "phpcs --standard=PSR2 src tests",
