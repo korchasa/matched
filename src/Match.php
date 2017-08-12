@@ -45,12 +45,12 @@ class Match
         }
 
         if (!is_array($actual)) {
-            $failure_callback($pattern, $actual, 'Given value not a array');
+            $failure_callback($pattern, $actual, "Given value of `$keyPrefix` not a array");
             return false;
         }
 
         if (count($pattern) > count($actual)) {
-            $failure_callback($pattern, $actual, 'Pattern size greater than given value');
+            $failure_callback($pattern, $actual, "Pattern size of `$keyPrefix` greater than given value");
             return false;
         }
 
