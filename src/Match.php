@@ -95,10 +95,9 @@ class Match
             return true;
         }
 
-        $result = preg_match(
-            '/'.str_replace(preg_quote($any_symbol), '.*', preg_quote($pattern)).'/',
-            $actual
-        );
+        $escapedAnySymbol = preg_quote($any_symbol, '/');
+        $escapedPattern = preg_quote($pattern, '/');
+        $result = preg_match('/'.str_replace($escapedAnySymbol, '.*', $escapedPattern).'/', $actual);
 
         if (false === $result) {
             throw new \Exception(preg_last_error());

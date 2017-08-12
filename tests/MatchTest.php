@@ -196,6 +196,11 @@ class MatchTest extends TestCase
             'fail end' => [ 'cucu***', 'bucumber', false ],
             'pass multiple' => [ '12345***0ab***f', '1234567890abcdef', true ],
             'fail multiple' => [ '12345***0ab***f', '1234567890abcdee', false ],
+            'escaping' => [
+                '/V/***class***method.json',
+                '/V/B/class_method.json',
+                true
+            ]
         ];
     }
 }
