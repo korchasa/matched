@@ -10,9 +10,33 @@
 composer require korchasa/matcho
 ```
 
-## Usage:
+## Usage in tests:
 
-Use *** for "any value".
+Use ```***``` for "any value". Connect asserts by ```use AssertMatchedTrait```, and
+
+```php
+$this->assertJsonMatched(
+    '{
+        "foo": "***", 
+        "bar": 42
+    }',
+    $this->server()->call()->responseJson()
+);
+
+$this->assertArrayMatched(
+    [
+        "foo" => "***", // check only presence
+        "bar" => 42 // check presence and value
+    ],
+    $complexArray
+);
+
+$this->assertStringMatched('cu***mber', $valirable);   
+```
+
+## Usage in business logic:
+
+Use ```***``` for "any value".
 
 Functions or class:
 ```php
