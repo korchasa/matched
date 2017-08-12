@@ -36,7 +36,8 @@ class Match
         array $pattern,
         $actual,
         string $any_symbol = self::ANY_SYMBOL,
-        callable $failure_callback = null
+        callable $failure_callback = null,
+        string $keyPrefix = ''
     ) :bool {
         if (!$failure_callback) {
             $failure_callback = function ($a, $b, $c) {
@@ -55,17 +56,21 @@ class Match
 
         foreach ($pattern as $key => $value) {
             if (!array_key_exists($key, $actual)) {
-                $failure_callback($pattern, $actual, "Given value has no key `$key`");
+                $failure_callback($pattern, $actual, "Given value has no key `$keyPrefix$key`");
                 return false;
             }
 
             if (is_array($value)) {
-                if (!static::array($value, $actual[$key], $any_symbol, $failure_callback)) {
+                if (!static::array($value, $actual[$key], $any_symbol, $failure_callback, $keyPrefix.$key.'.')) {
                     return false;
                 }
             } else {
                 if (!static::isScalarEqual($value, $actual[$key], $any_symbol)) {
-                    $failure_callback($value, $actual[$key], "Given value of `$value` not match pattern");
+                    $failure_callback(
+                        $value,
+                        $actual[$key],
+                        "Given value of `$keyPrefix$key` not match pattern `$value`"
+                    );
                     return false;
                 }
             }
