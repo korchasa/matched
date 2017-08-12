@@ -1,5 +1,7 @@
 {
     "name": "korchasa/matcho",
+    "description": "Simple pattern matching for PHP",
+    "keywords": ["pattern-matching", "phpunit"],
     "license": "MIT",
 	"authors": [
 		{
@@ -8,15 +10,15 @@
 		}
 	],
     "require": {
-        "sebastian/diff": "^2.0",
-        "roave/security-advisories": "dev-master"
+        "sebastian/diff": "^2.0"
     },
 	"require-dev": {
         "php": ">=7.0",
         "phpunit/phpunit": "^6.0",
         "phpstan/phpstan": "*",
         "sebastian/phpcpd": "*",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "roave/security-advisories": "dev-master"
 	},
     "autoload": {
         "psr-4": {
