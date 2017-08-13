@@ -36,7 +36,7 @@ class ArrayConstraint extends Constraint
         $returnResult = false
     ) {
         return Match::array($this->pattern, $other, Match::ANY_SYMBOL, function ($expected, $actual, $message) {
-            $diffBuilder = new UnifiedDiffOutputBuilder("--- Original\n+++ Actual\n");
+            $diffBuilder = new UnifiedDiffOutputBuilder("--- Pattern\n+++ Actual\n");
             $diff = (new Differ($diffBuilder))->diff(var_export($expected, true), var_export($actual, true));
             throw new ExpectationFailedException($message."\n".$diff);
         });

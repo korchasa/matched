@@ -41,6 +41,16 @@ class MatchTest extends TestCase
                 [ 'foo' => 'baz' ],
                 false
             ],
+            'inline string true' => [
+                [ 'foo' => 'bar***' ],
+                [ 'foo' => 'bar2'],
+                true
+            ],
+            'inline string false' => [
+                [ 'foo' => 'bar***'],
+                [ 'foo' => 'baz' ],
+                false
+            ],
             'list true' => [
                 [ 'foo' ],
                 [ 'foo', 'bar' ],

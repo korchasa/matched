@@ -2,7 +2,6 @@
 
 namespace korchasa\matched\Tests;
 
-use korchasa\matched\JsonConstraint;
 use korchasa\matched\StringConstraint;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
@@ -17,8 +16,18 @@ class StringConstraintTest extends TestCase
             $constraint->evaluate('sOme short string');
             $this->fail('Test must fail on second symbol');
         } catch (ExpectationFailedException $e) {
-            $this->assertNotFalse(
-                strpos($e->getMessage(), "-some***short***string\n+sOme short string")
+            $this->assertEquals(
+                <<<TEXT
+Given value not match pattern
+--- Pattern
++++ Actual
+@@ @@
+-some***short***string
++sOme short string
+
+TEXT
+                ,
+                $e->getMessage()
             );
         }
     }

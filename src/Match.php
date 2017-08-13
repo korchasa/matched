@@ -49,11 +49,6 @@ class Match
             return false;
         }
 
-        if (count($pattern) > count($actual)) {
-            $failure_callback($pattern, $actual, "Pattern size of `$keyPrefix` greater than given value");
-            return false;
-        }
-
         foreach ($pattern as $key => $value) {
             if (!array_key_exists($key, $actual)) {
                 $failure_callback($pattern, $actual, "Given value has no key `$keyPrefix$key`");

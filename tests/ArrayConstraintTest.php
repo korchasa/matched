@@ -10,14 +10,26 @@ class ArrayConstraintTest extends TestCase
 {
     public function testError()
     {
-        $constraint = new ArrayConstraint([ 'foo' => 'bar', 'baz' => 42 ]);
+        $constraint = new ArrayConstraint([ 'foo' => 'bar***', 'baz' => 42 ]);
 
         try {
-            $constraint->evaluate(['foo' => 'bar']);
+            $constraint->evaluate(['foo' => 'bar2']);
             $this->fail('Test must fail on second symbol');
         } catch (ExpectationFailedException $e) {
-            $this->assertNotFalse(
-                strpos($e->getMessage(), "'foo' => 'bar',\n-  'baz' => 42,")
+            $this->assertEquals(
+                <<<TEXT
+Given value has no key `baz`
+--- Pattern
++++ Actual
+@@ @@
+ array (
+-  'foo' => 'bar***',
+-  'baz' => 42,
++  'foo' => 'bar2',
+
+TEXT
+                ,
+                $e->getMessage()
             );
         }
     }
