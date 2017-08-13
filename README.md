@@ -12,62 +12,80 @@ composer require korchasa/matcho
 
 ## Usage in tests:
 
-Use ```***``` for "any value". Connect asserts by ```use AssertMatchedTrait```, and
+Use ```***``` for "any value". Connect asserts by ```use AssertMatchedTrait```
 
 ```php
-$this->assertJsonMatched(
-    '{
-        "baz": {
-            "value": 1
-        },
-        "items": [
-            { 
-                "a": "b***",
-                "c": 2
-            },
-            "***"  
-        ]
-    }',
-    $this->server()->call()->responseJson()
-);
-/**
-Given value of `items.0.c` not match pattern `2`
---- Pattern
-+++ Actual
-@@ @@
--2
-+22
-*/
+<?php 
 
-$this->assertArrayMatched(
-    [
-        "foo" => "somestring***", // check string pattern
-        "bar" => "***", // check only presence
-        "baz" => 42 // check presence and value
-    ],
-    $complexArray
-);
-/**
-Given value has no key `baz`
---- Pattern
-+++ Actual
-@@ @@
- array (
--  'foo' => 'something***',
--  'baz' => "***",
-+  'foo' => 'something2',
-*/
+use korchasa\Vhs\VhsTestCase;
+use PHPUnit\Framework\TestCase;
 
-$this->assertStringMatched('cu***mber', $somestring);
-/**
-Given value not match pattern
---- Pattern
-+++ Actual
-@@ @@
--cu***mber
-+kucumber
-*/
-   
+class IntegrationTest extends TestCase
+{
+    use VhsTestCase;
+    
+    public function testResponseJson()
+    {    
+        $this->assertJsonMatched(
+            '{
+                "baz": {
+                    "value": 1
+                },
+                "items": [
+                    { 
+                        "a": "b***",
+                        "c": 2
+                    },
+                    "***"  
+                ]
+            }',
+            $this->server()->call()->responseJson()
+        );
+        /**
+        Given value of `items.0.c` not match pattern `2`
+        --- Pattern
+        +++ Actual
+        @@ @@
+        -2
+        +22
+        */
+    }
+
+    public function testArray()
+    {
+        $this->assertArrayMatched(
+            [
+                "foo" => "somestring***", // check string pattern
+                "bar" => "***", // check only presence
+                "baz" => 42 // check presence and value
+            ],
+            $complexArray
+        );
+        /**
+        Given value has no key `baz`
+        --- Pattern
+        +++ Actual
+        @@ @@
+         array (
+        -  'foo' => 'something***',
+        -  'baz' => "***",
+        +  'foo' => 'something2',
+        */
+    }
+    
+    public function testString()
+    {
+        $this->assertStringMatched('cu***mber', $somestring);
+        /**
+        Given value not match pattern
+        --- Pattern
+        +++ Actual
+        @@ @@
+        -cu***mber
+        +kucumber
+        */
+    }   
+}
 ```
 
 ## Usage in business logic:
