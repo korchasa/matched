@@ -119,13 +119,13 @@ Match::string('12345***0ab***f', '1234567890abcdef'); //true
 
 ## Custom "any symbol":
 ```php
-Match::string('12345***0ab***f', '1234567890abcdef', '%%%'); //false
+Match::string('12345%%%0ab%%%f', '1234567890abcdef', '%%%'); //true
 ```
 
 ## Case (not implemented yet):
 ```php
-$processingResult = Match::case('user@company2.com')
-    ->string('***@company1.com', function($val) { return $this->processCompany1Email($val); })
-    ->string('***@company2.com', function($val) { return $this->processCompany2Email($val); })
+$processingResult = Match::stringCase('user@company2.com')
+    ->case('***@company1.com', function($val) { return $this->processCompany1Email($val); })
+    ->case('***@company2.com', function($val) { return $this->processCompany2Email($val); })
     ->default(function ($val) { return $this->processUsualEmails($val); });
 ```
