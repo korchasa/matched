@@ -17,21 +17,57 @@ Use ```***``` for "any value". Connect asserts by ```use AssertMatchedTrait```, 
 ```php
 $this->assertJsonMatched(
     '{
-        "foo": "***", 
-        "bar": 42
+        "baz": {
+            "value": 1
+        },
+        "items": [
+            { 
+                "a": "b***",
+                "c": 2
+            },
+            "***"  
+        ]
     }',
     $this->server()->call()->responseJson()
 );
+/**
+Given value of `items.0.c` not match pattern `2`
+--- Pattern
++++ Actual
+@@ @@
+-2
++22
+*/
 
 $this->assertArrayMatched(
     [
-        "foo" => "***", // check only presence
-        "bar" => 42 // check presence and value
+        "foo" => "somestring***", // check string pattern
+        "bar" => "***", // check only presence
+        "baz" => 42 // check presence and value
     ],
     $complexArray
 );
+/**
+Given value has no key `baz`
+--- Pattern
++++ Actual
+@@ @@
+ array (
+-  'foo' => 'something***',
+-  'baz' => "***",
++  'foo' => 'something2',
+*/
 
-$this->assertStringMatched('cu***mber', $valirable);   
+$this->assertStringMatched('cu***mber', $somestring);
+/**
+Given value not match pattern
+--- Pattern
++++ Actual
+@@ @@
+-cu***mber
++kucumber
+*/
+   
 ```
 
 ## Usage in business logic:
