@@ -17,12 +17,12 @@ Use ```***``` for "any value". Connect asserts by ```use AssertMatchedTrait```
 ```php
 <?php 
 
-use korchasa\Vhs\VhsTestCase;
+use korchasa\Vhs\AssertMatchedTrait;
 use PHPUnit\Framework\TestCase;
 
 class IntegrationTest extends TestCase
 {
-    use VhsTestCase;
+    use AssertMatchedTrait;
     
     public function testResponseJson()
     {    
