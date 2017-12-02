@@ -24,11 +24,12 @@ class JsonConstraint extends Constraint
     }
 
     /**
-     * @param mixed   $other
-     * @param string  $description
+     * @param mixed $other
+     * @param string $description
      * @param boolean $returnResult
      *
      * @return boolean
+     * @throws \Exception
      */
     public function evaluate(
         $other,

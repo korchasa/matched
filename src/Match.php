@@ -4,7 +4,7 @@ namespace korchasa\matched;
 
 class Match
 {
-    public const ANY_SYMBOL = '***';
+    const ANY_SYMBOL = '***';
 
     /**
      * @param string $pattern_json
