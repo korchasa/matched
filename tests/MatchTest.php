@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 class MatchTest extends TestCase
 {
     /**
-     * @param $pattern
-     * @param $actual
+     * @param array $pattern
+     * @param mixed $actual
      * @param bool $result
      * @dataProvider arrayProvider
      */
@@ -81,8 +81,8 @@ class MatchTest extends TestCase
     }
 
     /**
-     * @param $pattern
-     * @param $actual
+     * @param string $pattern
+     * @param mixed $actual
      * @param bool $result
      * @dataProvider jsonProvider
      */
@@ -187,10 +187,11 @@ class MatchTest extends TestCase
     }
 
     /**
-     * @param $pattern
-     * @param $actual
+     * @param string $pattern
+     * @param mixed $actual
      * @param bool $result
      * @dataProvider stringProvider
+     * @throws \Exception
      */
     public function testString(string $pattern, $actual, bool $result)
     {

@@ -8,7 +8,7 @@ class Match
 
     /**
      * @param string $pattern_json
-     * @param $actual_json
+     * @param mixed $actual_json
      * @param string $any_symbol
      * @param callable|null $failure_callback
      * @return bool
@@ -27,7 +27,7 @@ class Match
 
     /**
      * @param array $pattern
-     * @param $actual
+     * @param mixed $actual
      * @param string $any_symbol
      * @param callable|null $failure_callback
      * @return bool
@@ -74,6 +74,14 @@ class Match
         return true;
     }
 
+    /**
+     * @param string $pattern
+     * @param mixed $actual
+     * @param string $any_symbol
+     * @param callable|null $failure_callback
+     * @return bool
+     * @throws \Exception
+     */
     public static function string(
         string $pattern,
         $actual,

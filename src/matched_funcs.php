@@ -4,7 +4,7 @@ use korchasa\matched\Match;
 
 /**
  * @param string $pattern_json
- * @param $actual_json
+ * @param mixed $actual_json
  * @param string $any_symbol
  * @param callable|null $failure_callback
  * @return bool
@@ -20,7 +20,7 @@ function match_json(
 
 /**
  * @param array $pattern
- * @param $actual
+ * @param mixed $actual
  * @param string $any_symbol
  * @param callable|null $failure_callback
  * @return bool
@@ -35,8 +35,8 @@ function match_array(
 }
 
 /**
- * @param array $pattern
- * @param $actual
+ * @param string $pattern
+ * @param mixed $actual
  * @param string $any_symbol
  * @param callable|null $failure_callback
  * @return bool

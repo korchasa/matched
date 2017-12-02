@@ -10,25 +10,25 @@ use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 class StringConstraint extends Constraint
 {
     /**
-     * @var object
+     * @var string
      */
     protected $pattern;
 
     /**
      * @param string $pattern
      */
-    public function __construct($pattern = null)
+    public function __construct(string $pattern = null)
     {
         parent::__construct();
         $this->pattern = $pattern;
     }
 
     /**
-     * @param mixed   $other
-     * @param string  $description
+     * @param mixed $other
+     * @param string $description
      * @param boolean $returnResult
-     *
      * @return boolean
+     * @throws \Exception
      */
     public function evaluate(
         $other,

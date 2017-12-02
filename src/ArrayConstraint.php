@@ -10,7 +10,7 @@ use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 class ArrayConstraint extends Constraint
 {
     /**
-     * @var object
+     * @var array
      */
     protected $pattern;
 
