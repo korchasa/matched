@@ -24,17 +24,18 @@ class ArrayConstraint extends Constraint
     }
 
     /**
-     * @param mixed   $other
-     * @param string  $description
+     * @param mixed $other
+     * @param string $description
      * @param boolean $returnResult
      *
      * @return boolean
+     * @throws \Exception
      */
     public function evaluate(
         $other,
         $description = 'Failed asserting that array matched pattern',
         $returnResult = false
-    ) {
+    ): bool {
         return Match::array($this->pattern, $other, Match::ANY_SYMBOL, function ($expected, $actual, $message) {
             $diffBuilder = new UnifiedDiffOutputBuilder("--- Pattern\n+++ Actual\n");
             $diff = (new Differ($diffBuilder))->diff(var_export($expected, true), var_export($actual, true));
@@ -45,7 +46,7 @@ class ArrayConstraint extends Constraint
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return sprintf(
             'matches array "%s"',

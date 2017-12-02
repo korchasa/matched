@@ -12,6 +12,7 @@ class MatchTest extends TestCase
      * @param mixed $actual
      * @param bool $result
      * @dataProvider arrayProvider
+     * @throws \Exception
      */
     public function testArray(array $pattern, $actual, bool $result)
     {
@@ -85,6 +86,7 @@ class MatchTest extends TestCase
      * @param mixed $actual
      * @param bool $result
      * @dataProvider jsonProvider
+     * @throws \Exception
      */
     public function testJson(string $pattern, $actual, bool $result)
     {

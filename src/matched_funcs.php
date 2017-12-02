@@ -8,6 +8,7 @@ use korchasa\matched\Match;
  * @param string $any_symbol
  * @param callable|null $failure_callback
  * @return bool
+ * @throws Exception
  */
 function match_json(
     string $pattern_json,
@@ -24,6 +25,7 @@ function match_json(
  * @param string $any_symbol
  * @param callable|null $failure_callback
  * @return bool
+ * @throws Exception
  */
 function match_array(
     array $pattern,
@@ -40,6 +42,7 @@ function match_array(
  * @param string $any_symbol
  * @param callable|null $failure_callback
  * @return bool
+ * @throws Exception
  */
 function match_string(
     string $pattern,

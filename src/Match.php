@@ -4,7 +4,7 @@ namespace korchasa\matched;
 
 class Match
 {
-    const ANY_SYMBOL = '***';
+    public const ANY_SYMBOL = '***';
 
     /**
      * @param string $pattern_json
@@ -12,6 +12,7 @@ class Match
      * @param string $any_symbol
      * @param callable|null $failure_callback
      * @return bool
+     * @throws \Exception
      */
     public static function json(
         string $pattern_json,
@@ -30,7 +31,9 @@ class Match
      * @param mixed $actual
      * @param string $any_symbol
      * @param callable|null $failure_callback
+     * @param string $keyPrefix
      * @return bool
+     * @throws \Exception
      */
     public static function array(
         array $pattern,
@@ -107,7 +110,7 @@ class Match
         $result = preg_match('/'.str_replace($escapedAnySymbol, '.*', $escapedPattern).'/', $actual);
 
         if (false === $result) {
-            throw new \Exception(preg_last_error());
+            throw new \RuntimeException(preg_last_error());
         }
 
         if (0 === $result) {
@@ -117,7 +120,14 @@ class Match
         return (bool) $result;
     }
 
-    private static function isScalarEqual($pattern, $actual, $anySymbol)
+    /**
+     * @param mixed $pattern
+     * @param mixed $actual
+     * @param string $anySymbol
+     * @return bool
+     * @throws \Exception
+     */
+    private static function isScalarEqual($pattern, $actual, string $anySymbol): bool
     {
         if ($anySymbol === $pattern || $pattern === $actual) {
             return true;

@@ -29,7 +29,7 @@ trait AssertMatchedTrait
      * @param string|object $actual
      * @param string        $message
      */
-    public static function assertJsonMatched($pattern, $actual, string $message = '')
+    public static function assertJsonMatched($pattern, $actual, string $message = ''): void
     {
         static::assertJson((string) $pattern, 'Pattern must be a valid JSON');
         static::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
@@ -64,7 +64,7 @@ trait AssertMatchedTrait
      * @param array|object $actual
      * @param string        $message
      */
-    public static function assertArrayMatched($pattern, $actual, string $message = '')
+    public static function assertArrayMatched($pattern, $actual, string $message = ''): void
     {
         static::assertInternalType('array', (array) $pattern, 'Pattern must be a array');
         static::assertInternalType('array', (array) $actual, 'Actual must be a array');
@@ -87,7 +87,7 @@ trait AssertMatchedTrait
      * @param string|object $actual
      * @param string        $message
      */
-    public static function assertStringMatched($pattern, $actual, string $message = '')
+    public static function assertStringMatched($pattern, $actual, string $message = ''): void
     {
         static::assertInternalType('string', (string) $pattern, 'Pattern must be a string');
         static::assertInternalType('string', (string) $actual, 'Actual must be a string');
