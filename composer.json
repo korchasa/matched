@@ -15,10 +15,9 @@
     },
 	"require-dev": {
         "php": ">=7.0",
-        "phpunit/phpunit": "^6.0",
-        "phpstan/phpstan": "*",
-        "sebastian/phpcpd": "*",
-        "squizlabs/php_codesniffer": "*"
+        "phpunit/phpunit": "6.*",
+        "phpstan/phpstan": "0.9.*",
+        "squizlabs/php_codesniffer": "3.*"
 	},
     "autoload": {
         "psr-4": {
