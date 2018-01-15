@@ -22,4 +22,4 @@ before_install:
 
 install: composer update --prefer-dist $PREFER $COMPOSER_FLAGS
 
-script: composer run-script unit && ./vendor/bin/phpstan analyse -l5 src tests && composer run-script style
+script: composer unit && composer analyze && composer style
