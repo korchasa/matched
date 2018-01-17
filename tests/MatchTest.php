@@ -8,6 +8,50 @@ use PHPUnit\Framework\TestCase;
 class MatchTest extends TestCase
 {
     /**
+     * @param string $pattern
+     * @param mixed $actual
+     * @param bool $result
+     * @dataProvider stringProvider
+     * @throws \Exception
+     */
+    public function testString(string $pattern, $actual, bool $result)
+    {
+        $this->assertEquals($result, Match::string($pattern, $actual));
+    }
+
+    public function stringProvider()
+    {
+        return [
+            'types mismatch' => [ 'foo', 1, false],
+            'equals strings' => [ 'foo', 'foo', 'foo' ],
+            'special symbols protection' => [ '**cumber', 'cucumber', false ],
+            'pass begin' => [ '***cumber', 'cucumber', true ],
+            'fail begin' => [ '***cumber', 'cucumbez', false ],
+            'pass middle' => [ 'cu***mber', 'cucumber', true ],
+            'fail middle' => [ 'cu***mber', 'cucumbez', false ],
+            'pass end' => [ 'cucu***', 'cucumber', true ],
+            'fail end' => [ 'cucu***', 'bucumber', false ],
+            'pass multiple' => [ '12345***0ab***f', '1234567890abcdef', true ],
+            'fail multiple' => [ '12345***0ab***f', '1234567890abcdee', false ],
+            'with defaults in the string' => [ 'with**>out<** defaults **>in<** the string', 'with defaults at the string', true ],
+            'escaping' => [
+                '/V/***class***method.json',
+                '/V/B/class_method.json',
+                true
+            ]
+        ];
+    }
+
+
+    public function testDefaultString()
+    {
+        $this->assertEquals(
+            'pattern with default value',
+            Match::defaultString('pat**>te<**rn ***wit***h **>default <**value')
+        );
+    }
+
+    /**
      * @param array $pattern
      * @param mixed $actual
      * @param bool $result
@@ -65,11 +109,11 @@ class MatchTest extends TestCase
             'with depth' => [
                 [
                     'foo' => [ 'any' => '***' ],
-                    '***'
+                    '***',
                 ],
                 [
                     'foo' => [ 'any' => 11 ],
-                    'baz'
+                    'baz',
                 ],
                 true
             ],
@@ -77,8 +121,33 @@ class MatchTest extends TestCase
                 [ 'string' => 'a***c' ],
                 [ 'string' => "ac" ],
                 true
+            ],
+            'with default values' => [
+                [
+                    'foo' => [ 'any' => '**>abc<**' ],
+                    '**>some_value<**'
+                ],
+                [
+                    'foo' => [ 'any' => 11 ],
+                    'baz'
+                ],
+                true
             ]
         ];
+    }
+
+    public function testDefaultArray()
+    {
+        $this->assertEquals(
+            [
+                'foo' => [ 'any' => 'abc' ],
+                'some_value'
+            ],
+            Match::defaultArray([
+                'foo' => [ 'any' => '**>abc<**' ],
+                '**>some_value<**'
+            ])
+        );
     }
 
     /**
@@ -167,6 +236,30 @@ class MatchTest extends TestCase
         ];
     }
 
+    public function testDefaultJson()
+    {
+        $this->assertEquals(
+            json_decode('{
+                "foo": "bar",
+                "baz": "42",
+                "items": [
+                    "foo",
+                    { "z": "x", "c": 3 }    
+                ]
+            }'),
+            json_decode(Match::defaultJson(
+                '{
+                    "foo": "bar",
+                    "baz": "**>4<**2",
+                    "items": [
+                        "**>foo<**",
+                        { "z": "x", "c": 3 }    
+                    ]
+                }'
+            ))
+        );
+    }
+
     public function testJsonWithCustomSymbol()
     {
         $this->assertTrue(
@@ -186,39 +279,5 @@ class MatchTest extends TestCase
                 '%some_value%'
             )
         );
-    }
-
-    /**
-     * @param string $pattern
-     * @param mixed $actual
-     * @param bool $result
-     * @dataProvider stringProvider
-     * @throws \Exception
-     */
-    public function testString(string $pattern, $actual, bool $result)
-    {
-        $this->assertEquals($result, Match::string($pattern, $actual));
-    }
-
-    public function stringProvider()
-    {
-        return [
-            'types mismatch' => [ 'foo', 1, false],
-            'equals strings' => [ 'foo', 'foo', true ],
-            'special symbols protection' => [ '**cumber', 'cucumber', false ],
-            'pass begin' => [ '***cumber', 'cucumber', true ],
-            'fail begin' => [ '***cumber', 'cucumbez', false ],
-            'pass middle' => [ 'cu***mber', 'cucumber', true ],
-            'fail middle' => [ 'cu***mber', 'cucumbez', false ],
-            'pass end' => [ 'cucu***', 'cucumber', true ],
-            'fail end' => [ 'cucu***', 'bucumber', false ],
-            'pass multiple' => [ '12345***0ab***f', '1234567890abcdef', true ],
-            'fail multiple' => [ '12345***0ab***f', '1234567890abcdee', false ],
-            'escaping' => [
-                '/V/***class***method.json',
-                '/V/B/class_method.json',
-                true
-            ]
-        ];
     }
 }
