@@ -88,14 +88,14 @@ class Match
 
     public static function defaultArray(array $pattern, string $anySymbol = self::ANY_SYMBOL): array
     {
-        return array_map(function($value) use($anySymbol) {
+        return array_map(function ($value) use ($anySymbol) {
             if (is_string($value)) {
                 return static::defaultString($value, $anySymbol);
             }
             if (is_array($value)) {
                 return static::defaultArray($value, $anySymbol);
             }
-            
+
             return $value;
         }, $pattern);
     }

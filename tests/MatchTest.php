@@ -33,7 +33,11 @@ class MatchTest extends TestCase
             'fail end' => [ 'cucu***', 'bucumber', false ],
             'pass multiple' => [ '12345***0ab***f', '1234567890abcdef', true ],
             'fail multiple' => [ '12345***0ab***f', '1234567890abcdee', false ],
-            'with defaults in the string' => [ 'with**>out<** defaults **>in<** the string', 'with defaults at the string', true ],
+            'with defaults in the string' => [
+                'with**>out<** defaults **>in<** the string',
+                'with defaults at the string',
+                true
+            ],
             'escaping' => [
                 '/V/***class***method.json',
                 '/V/B/class_method.json',
