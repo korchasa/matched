@@ -38,11 +38,7 @@ class MatchTest extends TestCase
                 'with defaults at the string',
                 true
             ],
-            'escaping' => [
-                '/V/***class***method.json',
-                '/V/B/class_method.json',
-                true
-            ]
+            'escaping' => ['/V/***class***method.json', '/V/B/class_method.json', true ]
         ];
     }
 
