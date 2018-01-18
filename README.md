@@ -140,6 +140,14 @@ Match::string('12345***0ab***f', '1234567890abcdef'); //true
 Match::string('12345%%%0ab%%%f', '1234567890abcdef', '%%%'); //true
 ```
 
+## Default values vs ***: 
+```php
+Match::string('123450ab**>cde<**f', '1234567890abcdef'); //true
+Match::defaultString('123450ab**>cde<**f'); //123450abcdef
+Match::defaultString('**>foo<**'); //foo
+Match::defaultString('***1'); //1
+```
+
 ## Case (not implemented yet):
 ```php
 $processingResult = Match::stringCase('user@company2.com')

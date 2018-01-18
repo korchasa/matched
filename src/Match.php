@@ -185,6 +185,7 @@ class Match
      * @param mixed $pattern
      * @param string $anySymbol
      * @return mixed
+     * @throws \InvalidArgumentException
      */
     private static function replaceDefaultsWithAnySymbol($pattern, string $anySymbol)
     {
