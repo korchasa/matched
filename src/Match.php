@@ -68,7 +68,7 @@ class Match
             }
 
             if (is_array($value)) {
-                if (!static::array($value, $actual[$key], $any_symbol, $failure_callback, $keyPrefix.$key.'.')) {
+                if (!static::array($value, $actual[$key], $any_symbol, $failure_callback, $keyPrefix.$key.' > ')) {
                     return false;
                 }
             } else {

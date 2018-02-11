@@ -15,11 +15,11 @@ class JsonConstraintTest extends TestCase
                 "value": 1
             },
             "items": [
-                { 
+                {
                     "a": "b***",
                     "c": 2
                 },
-                "***"  
+                "***"
             ]
         }');
 
@@ -29,21 +29,21 @@ class JsonConstraintTest extends TestCase
                     "value": 1
                 },
                 "items": [
-                    { 
+                    {
                         "a": "b2",
                         "c": 22
                     },
-                    { 
+                    {
                         "z": "x",
                         "c": 3
-                    }    
+                    }
                 ]
             }');
             $this->fail('Test must fail with missed key items.a');
         } catch (ExpectationFailedException $e) {
             $this->assertEquals(
                 <<<TEXT
-Given value of `items.0.c` not match pattern `2`
+Given value of `items > 0 > c` not match pattern `2`
 --- Pattern
 +++ Actual
 @@ @@
