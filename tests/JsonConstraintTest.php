@@ -56,4 +56,18 @@ TEXT
             );
         }
     }
+
+    public function testToString()
+    {
+        $constraint = new JsonConstraint('{
+            "baz": {
+                "value": 1
+            }
+        }');
+
+        $this->assertEquals(
+            "matches JSON string `{\n            \"baz\": {\n                \"value\": 1\n            }\n        }`",
+            $constraint->toString()
+        );
+    }
 }

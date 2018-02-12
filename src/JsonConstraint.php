@@ -49,7 +49,7 @@ class JsonConstraint extends Constraint
     public function toString(): string
     {
         return sprintf(
-            'matches JSON string "%s"',
+            'matches JSON string `%s`',
             $this->pattern
         );
     }

@@ -49,8 +49,8 @@ class ArrayConstraint extends Constraint
     public function toString(): string
     {
         return sprintf(
-            'matches array "%s"',
-            $this->pattern
+            'matches array `%s`',
+            json_encode($this->pattern)
         );
     }
 }

@@ -33,4 +33,12 @@ TEXT
             );
         }
     }
+
+    public function testToString()
+    {
+        $this->assertEquals(
+            'matches array `{"foo":"bar***","baz":42}`',
+            (new ArrayConstraint([ 'foo' => 'bar***', 'baz' => 42 ]))->toString()
+        );
+    }
 }
