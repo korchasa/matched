@@ -31,4 +31,12 @@ TEXT
             );
         }
     }
+
+    public function testToString()
+    {
+        $this->assertEquals(
+            'matches string `some***short***string`',
+            (new StringConstraint('some***short***string'))->toString()
+        );
+    }
 }

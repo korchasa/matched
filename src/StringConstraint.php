@@ -48,7 +48,7 @@ class StringConstraint extends Constraint
     public function toString(): string
     {
         return sprintf(
-            'matches string "%s"',
+            'matches string `%s`',
             $this->pattern
         );
     }
