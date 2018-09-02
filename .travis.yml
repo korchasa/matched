@@ -10,12 +10,17 @@ php:
   - '7.0'
   - '7.1'
   - '7.2'
-  - '7.3'
+  - nightly
 
 env:
   matrix:
     - PREFER="--prefer-lowest --prefer-stable"
     - PREFER=""
+
+matrix:
+  exclude:
+      - php: 'nightly'
+        env: PREFER="--prefer-lowest --prefer-stable"
 
 before_install:
   - composer self-update
