@@ -13,7 +13,7 @@
         "sebastian/diff": "^3.0"
     },
 	"require-dev": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "roave/security-advisories": "dev-master",
         "phpunit/phpunit": "^7.0",
         "phpstan/phpstan": "^0.9",
