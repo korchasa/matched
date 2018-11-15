@@ -15,6 +15,8 @@ ADD https://github.com/composer/composer/releases/download/1.7.3/composer.phar .
 
 COPY . /app
 
-RUN echo ">>> Test" && \
+RUN echo ">>> Update sources" && \
+    php ./composer update && \
+    echo ">>> Test" && \
     php ./composer check && \
     ./vendor/bin/infection --test-framework=phpunit --min-msi=50 --min-covered-msi=70 --ignore-msi-with-no-mutations --ansi -s

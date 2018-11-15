@@ -26,6 +26,7 @@ Given value has no key `baz`
 -  'foo' => 'bar***',
 -  'baz' => 42,
 +  'foo' => 'bar2',
+ )
 
 TEXT
                 ,
