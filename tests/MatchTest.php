@@ -16,29 +16,45 @@ class MatchTest extends TestCase
      */
     public function testString(string $pattern, $actual, bool $result)
     {
-        $this->assertEquals($result, Match::string($pattern, $actual));
+        $failureCallbackCalled = false;
+        $this->assertEquals(
+            $result,
+            Match::string(
+                $pattern,
+                $actual,
+                Match::ANY_SYMBOL,
+                function () use (&$failureCallbackCalled) {
+                    $failureCallbackCalled = true;
+                }
+            )
+        );
+        if ($result && $failureCallbackCalled) {
+            $this->fail('Unexpected failure callback call');
+        } elseif (!$result && !$failureCallbackCalled) {
+            $this->fail('The expected failure callback call not occur');
+        }
     }
 
-    public function stringProvider()
+    public function stringProvider(): array
     {
         return [
-            'types mismatch' => [ 'foo', 1, false],
-            'equals strings' => [ 'foo', 'foo', 'foo' ],
-            'special symbols protection' => [ '**cumber', 'cucumber', false ],
-            'pass begin' => [ '***cumber', 'cucumber', true ],
-            'fail begin' => [ '***cumber', 'cucumbez', false ],
-            'pass middle' => [ 'cu***mber', 'cucumber', true ],
-            'fail middle' => [ 'cu***mber', 'cucumbez', false ],
-            'pass end' => [ 'cucu***', 'cucumber', true ],
-            'fail end' => [ 'cucu***', 'bucumber', false ],
-            'pass multiple' => [ '12345***0ab***f', '1234567890abcdef', true ],
-            'fail multiple' => [ '12345***0ab***f', '1234567890abcdee', false ],
+            'types mismatch' => ['foo', 1, false],
+            'equals strings' => ['foo', 'foo', 'foo'],
+            'special symbols protection' => ['**cumber', 'cucumber', false],
+            'pass begin' => ['***cumber', 'cucumber', true],
+            'fail begin' => ['***cumber', 'cucumbez', false],
+            'pass middle' => ['cu***mber', 'cucumber', true],
+            'fail middle' => ['cu***mber', 'cucumbez', false],
+            'pass end' => ['cucu***', 'cucumber', true],
+            'fail end' => ['cucu***', 'bucumber', false],
+            'pass multiple' => ['12345***0ab***f', '1234567890abcdef', true],
+            'fail multiple' => ['12345***0ab***f', '1234567890abcdee', false],
             'with defaults in the string' => [
                 'with**>out<** defaults **>in<** the string',
                 'with defaults at the string',
-                true
+                true,
             ],
-            'escaping' => ['/V/***class***method.json', '/V/B/class_method.json', true ]
+            'escaping' => ['/V/***class***method.json', '/V/B/class_method.json', true],
         ];
     }
 
@@ -63,76 +79,76 @@ class MatchTest extends TestCase
         $this->assertEquals($result, Match::array($pattern, $actual));
     }
 
-    public function arrayProvider()
+    public function arrayProvider(): array
     {
         return [
             'simple true' => [
-                [ 'foo' => 'bar' ],
-                [ 'foo' => 'bar' ],
-                true
+                ['foo' => 'bar'],
+                ['foo' => 'bar'],
+                true,
             ],
             'simple false' => [
-                [ 'foo' => 'bar' ],
-                [ 'foo' => 'baz' ],
-                false
+                ['foo' => 'bar'],
+                ['foo' => 'baz'],
+                false,
             ],
             'partial true' => [
-                [ 'foo' => 'bar' ],
-                [ 'foo' => 'bar', 'baz' => 42 ],
-                true
+                ['foo' => 'bar'],
+                ['foo' => 'bar', 'baz' => 42],
+                true,
             ],
             'partial false' => [
-                [ 'foo' => 'bar', 'baz' => 42 ],
-                [ 'foo' => 'baz' ],
-                false
+                ['foo' => 'bar', 'baz' => 42],
+                ['foo' => 'baz'],
+                false,
             ],
             'inline string true' => [
-                [ 'foo' => 'bar***' ],
-                [ 'foo' => 'bar2'],
-                true
+                ['foo' => 'bar***'],
+                ['foo' => 'bar2'],
+                true,
             ],
             'inline string false' => [
-                [ 'foo' => 'bar***'],
-                [ 'foo' => 'baz' ],
-                false
+                ['foo' => 'bar***'],
+                ['foo' => 'baz'],
+                false,
             ],
             'list true' => [
-                [ 'foo' ],
-                [ 'foo', 'bar' ],
-                true
+                ['foo'],
+                ['foo', 'bar'],
+                true,
             ],
             'list false' => [
-                [ 'foo', 'bar', 'baz'],
-                [ 'foo', 'bar' ],
-                false
+                ['foo', 'bar', 'baz'],
+                ['foo', 'bar'],
+                false,
             ],
             'with depth' => [
                 [
-                    'foo' => [ 'any' => '***' ],
+                    'foo' => ['any' => '***'],
                     '***',
                 ],
                 [
-                    'foo' => [ 'any' => 11 ],
+                    'foo' => ['any' => 11],
                     'baz',
                 ],
-                true
+                true,
             ],
             'with in string pattern' => [
-                [ 'string' => 'a***c' ],
-                [ 'string' => "ac" ],
-                true
+                ['string' => 'a***c'],
+                ['string' => "ac"],
+                true,
             ],
             'with default values' => [
                 [
-                    'foo' => [ 'any' => '**>abc<**' ],
-                    '**>some_value<**'
+                    'foo' => ['any' => '**>abc<**'],
+                    '**>some_value<**',
                 ],
                 [
-                    'foo' => [ 'any' => 11 ],
-                    'baz'
+                    'foo' => ['any' => 11],
+                    'baz',
                 ],
-                true
-            ]
+                true,
+            ],
         ];
     }
 
@@ -140,13 +156,15 @@ class MatchTest extends TestCase
     {
         $this->assertEquals(
             [
-                'foo' => [ 'any' => 'abc' ],
-                'some_value'
+                'foo' => ['any' => 'abc'],
+                'some_value',
             ],
-            Match::defaultArray([
-                'foo' => [ 'any' => '**>abc<**' ],
-                '**>some_value<**'
-            ])
+            Match::defaultArray(
+                [
+                    'foo' => ['any' => '**>abc<**'],
+                    '**>some_value<**',
+                ]
+            )
         );
     }
 
@@ -162,7 +180,7 @@ class MatchTest extends TestCase
         $this->assertEquals($result, Match::json($pattern, $actual));
     }
 
-    public function jsonProvider()
+    public function jsonProvider(): array
     {
         return [
             'complex true' => [
@@ -182,7 +200,7 @@ class MatchTest extends TestCase
                         { "z": "x", "c": 3 }    
                     ]
                 }',
-                true
+                true,
             ],
             'complex false' => [
                 '{
@@ -201,7 +219,7 @@ class MatchTest extends TestCase
                         { "z": "x", "c": 3 }    
                     ]
                 }',
-                false
+                false,
             ],
             'missed key items.a' => [
                 '{
@@ -231,32 +249,34 @@ class MatchTest extends TestCase
                         }    
                     ]
                 }',
-                false
-            ]
+                false,
+            ],
         ];
     }
 
     public function testDefaultJson()
     {
         $this->assertEquals(
-            json_decode('{
-                "foo": "bar",
-                "baz": "42",
-                "items": [
-                    "foo",
-                    { "z": "x", "c": 3 }    
-                ]
-            }'),
-            json_decode(Match::defaultJson(
+            '{
+    "emoji": "😂привет",
+    "foo": "bar",
+    "baz": "42",
+    "items": [
+        "foo",
+        {
+            "z": "x",
+            "c": 3
+        }
+    ]
+}',
+            Match::defaultJson(
                 '{
+                    "emoji": "😂привет",
                     "foo": "bar",
                     "baz": "**>4<**2",
-                    "items": [
-                        "**>foo<**",
-                        { "z": "x", "c": 3 }    
-                    ]
+                    "items": ["**>foo<**", { "z": "x", "c": 3 }]
                 }'
-            ))
+            )
         );
     }
 

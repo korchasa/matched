@@ -34,6 +34,12 @@ TEXT
         }
     }
 
+    public function testErrorReturnResult()
+    {
+        $constraint = new ArrayConstraint([ 'foo' => 'bar***', 'baz' => 42 ]);
+        $this->assertFalse($constraint->evaluate(['foo' => 'bar2'], '', true));
+    }
+
     public function testToString()
     {
         $this->assertEquals(

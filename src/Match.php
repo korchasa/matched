@@ -134,10 +134,6 @@ class Match
         $escapedAnySymbol = preg_quote($anySymbol, '/');
         $result = preg_match('/'.str_replace($escapedAnySymbol, '.*', $escapedPattern).'/', $actual);
 
-        if (false === $result) {
-            throw new \RuntimeException(preg_last_error());
-        }
-
         if (0 === $result) {
             $failureCallback($pattern, $actual, 'Given value not match pattern');
         }
@@ -195,10 +191,6 @@ class Match
 
         $beginDefaultSymbol = self::$anySymbolBegin;
         $endDefaultSymbol = self::$anySymbolEnd;
-        if (0 === (substr_count($pattern, $beginDefaultSymbol) + substr_count($pattern, $endDefaultSymbol))) {
-            return $pattern;
-        }
-
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $pattern = preg_replace(
             '/'.preg_quote($beginDefaultSymbol, '/').'(.*)'.preg_quote($endDefaultSymbol, '/').'/',

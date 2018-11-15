@@ -57,6 +57,12 @@ TEXT
         }
     }
 
+    public function testErrorReturnValue()
+    {
+        $constraint = new JsonConstraint('{"baz": {"value": 1}}');
+        $this->assertFalse($constraint->evaluate('{"baz": {"value": 2}}', '', true));
+    }
+
     public function testToString()
     {
         $constraint = new JsonConstraint('{

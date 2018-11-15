@@ -35,12 +35,20 @@ class JsonConstraint extends Constraint
         $other,
         $description = 'Failed asserting that json matched pattern',
         $returnResult = false
-    ) :bool {
-        return Match::json($this->pattern, $other, Match::ANY_SYMBOL, function ($expected, $actual, $message) {
-            $diffBuilder = new UnifiedDiffOutputBuilder("--- Pattern\n+++ Actual\n");
-            $diff = (new Differ($diffBuilder))->diff(var_export($expected, true), var_export($actual, true));
-            throw new ExpectationFailedException($message."\n".$diff);
-        });
+    ): bool {
+        return Match::json(
+            $this->pattern,
+            $other,
+            Match::ANY_SYMBOL,
+            function ($expected, $actual, $message) use ($returnResult) {
+                if ($returnResult) {
+                    return;
+                }
+                $diffBuilder = new UnifiedDiffOutputBuilder("--- Pattern\n+++ Actual\n");
+                $diff = (new Differ($diffBuilder))->diff(var_export($expected, true), var_export($actual, true));
+                throw new ExpectationFailedException($message."\n".$diff);
+            }
+        );
     }
 
     /**

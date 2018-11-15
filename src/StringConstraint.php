@@ -35,11 +35,19 @@ class StringConstraint extends Constraint
         $description = 'Failed asserting that string matched pattern',
         $returnResult = false
     ): bool {
-        return Match::string($this->pattern, $other, Match::ANY_SYMBOL, function ($expected, $actual, $message) {
-            $diffBuilder = new UnifiedDiffOutputBuilder("--- Pattern\n+++ Actual\n");
-            $diff = (new Differ($diffBuilder))->diff($expected, $actual);
-            throw new ExpectationFailedException($message."\n".$diff);
-        });
+        return Match::string(
+            $this->pattern,
+            $other,
+            Match::ANY_SYMBOL,
+            function ($expected, $actual, $message) use ($returnResult) {
+                if ($returnResult) {
+                    return;
+                }
+                $diffBuilder = new UnifiedDiffOutputBuilder("--- Pattern\n+++ Actual\n");
+                $diff = (new Differ($diffBuilder))->diff($expected, $actual);
+                throw new ExpectationFailedException($message."\n".$diff);
+            }
+        );
     }
 
     /**

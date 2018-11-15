@@ -25,18 +25,13 @@ trait AssertMatchedTrait
      *          }'
      * )
      *
-     * @param string|object $pattern
-     * @param string|object $actual
-     * @param string        $message
+     * @param string $pattern
+     * @param string $actual
+     * @param string $message
      */
-    public static function assertJsonMatched($pattern, $actual, string $message = '')
+    private static function assertJsonMatched(string $pattern, string $actual, string $message = ''): void
     {
-        static::assertJson((string) $pattern, 'Pattern must be a valid JSON');
-        static::assertJson((string) $actual, 'Actual JSON must be a valid JSON');
-
-        $constraint = new JsonConstraint((string) $pattern);
-
-        static::assertThat((string) $actual, $constraint, $message);
+        static::assertThat($actual, new JsonConstraint($pattern), $message);
     }
 
     /**
@@ -60,18 +55,13 @@ trait AssertMatchedTrait
      *          ]
      * )
      *
-     * @param array|object $pattern
-     * @param array|object $actual
-     * @param string        $message
+     * @param iterable $pattern
+     * @param iterable $actual
+     * @param string $message
      */
-    public static function assertArrayMatched($pattern, $actual, string $message = '')
+    private static function assertArrayMatched(iterable $pattern, iterable $actual, string $message = ''): void
     {
-        static::assertInternalType('array', (array) $pattern, 'Pattern must be a array');
-        static::assertInternalType('array', (array) $actual, 'Actual must be a array');
-
-        $constraint = new ArrayConstraint((array) $pattern);
-
-        static::assertThat((array) $actual, $constraint, $message);
+        static::assertThat((array)$actual, new ArrayConstraint((array)$pattern), $message);
     }
 
     /**
@@ -83,17 +73,12 @@ trait AssertMatchedTrait
      *
      * @example assertStringMatched('cu***mber', 'cucumber')
      *
-     * @param string|object $pattern
-     * @param string|object $actual
-     * @param string        $message
+     * @param string $pattern
+     * @param string $actual
+     * @param string $message
      */
-    public static function assertStringMatched($pattern, $actual, string $message = '')
+    private static function assertStringMatched(string $pattern, string $actual, string $message = ''): void
     {
-        static::assertInternalType('string', (string) $pattern, 'Pattern must be a string');
-        static::assertInternalType('string', (string) $actual, 'Actual must be a string');
-
-        $constraint = new StringConstraint((string) $pattern);
-
-        static::assertThat((string) $actual, $constraint, $message);
+        static::assertThat($actual, new StringConstraint($pattern), $message);
     }
 }

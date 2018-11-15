@@ -32,6 +32,12 @@ TEXT
         }
     }
 
+    public function testErrorReturnValue()
+    {
+        $constraint = new StringConstraint('some***short***string');
+        $this->assertFalse($constraint->evaluate('sOme short string', '', true));
+    }
+
     public function testToString()
     {
         $this->assertEquals(
