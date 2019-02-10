@@ -7,7 +7,6 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - '7.0'
   - '7.1'
   - '7.2'
   - '7.3'
@@ -22,8 +21,9 @@ matrix:
   allow_failures:
       - php: 'nightly'
 
+before_install: composer self-update -n
+
 install:
-  - composer self-update
   - if [ -z "$dependencies" ]; then composer install -v; fi;
   - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest -nv; fi;
   - if [ "$dependencies" = "highest" ]; then composer update -nv; fi;
