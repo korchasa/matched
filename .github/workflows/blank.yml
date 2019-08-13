@@ -1,0 +1,17 @@
+name: CI
+
+on: [push,pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+    
+    steps:
+    - uses: composer:1.9.0
+    - name: Check
+      run: composer check
+    - name: Build coverage report
+      run: |
+        - ./vendor/bin/phpunit --coverage-clover=coverage.xml
+        - bash <(curl -s https://codecov.io/bash)
