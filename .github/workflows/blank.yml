@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-18.04
     
     steps:
-    - uses: hub.docker.com/composer@1.9.0
+    - uses: docker://composer:1.9.0
     - name: Check
       run: composer check
     - name: Build coverage report
