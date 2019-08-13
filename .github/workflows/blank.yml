@@ -8,9 +8,12 @@ jobs:
     runs-on: ubuntu-18.04
     
     steps:
-    - uses: docker://composer:1.9.0
     - name: Check
-      run: composer check
+      uses: docker://composer:1.9.0
+      run: |
+        - ls -lha
+        - composer install
+        - composer check
     - name: Build coverage report
       run: |
         - ./vendor/bin/phpunit --coverage-clover=coverage.xml
