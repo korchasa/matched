@@ -21,6 +21,7 @@ env:
 matrix:
   allow_failures:
       - php: 'nightly'
+      - php: '7.4snapshot'
 
 before_install: composer self-update -n
 
