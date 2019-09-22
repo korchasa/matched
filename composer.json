@@ -42,10 +42,11 @@
             "@unit",
             "@analyze",
             "@style",
-            "@style"
+            "@infect"
         ],
         "style": "phpcs --standard=PSR2 src tests",
         "analyze": "phpstan analyse -c ./.phpstan.neon -l5 src tests",
+        "infect": "infection --test-framework=phpunit --min-msi=85 --min-covered-msi=90 --ignore-msi-with-no-mutations --ansi -s",
         "unit": "phpunit",
         "style-fix": "phpcbf --standard=PSR2 src tests"
     }

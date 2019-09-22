@@ -1,22 +1,17 @@
-FROM alpine:edge
+FROM alpine:3.10
 
 WORKDIR /app
 
 RUN echo ">>> Install tools" && \
-    apk add --no-cache bash ca-certificates
-
-RUN echo ">>> Install php packages" && \
+    apk add --no-cache bash ca-certificates && \
+    echo ">>> Install php packages" && \
     apk add --no-cache php7 php7-json php7-phar php7-iconv php7-openssl php7-zlib \
-    php7-mbstring php7-json php7-ctype php7-xml php7-xmlwriter php7-simplexml php7-dom php7-pecl-xdebug php7-tokenizer
-
-RUN echo "zend_extension=xdebug.so" > /etc/php7/conf.d/xdebug.ini
-
-ADD https://github.com/composer/composer/releases/download/1.7.3/composer.phar ./composer
+    php7-mbstring php7-json php7-ctype php7-xml php7-xmlwriter php7-simplexml php7-dom php7-pecl-xdebug php7-tokenizer && \
+    echo "zend_extension=xdebug.so" > /etc/php7/conf.d/xdebug.ini && \
+    echo ">>> Install composer" && \
+    wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet --install-dir /bin --filename composer
 
 COPY . /app
 
-RUN echo ">>> Update sources" && \
-    php ./composer update && \
-    echo ">>> Test" && \
-    php ./composer check && \
-    ./vendor/bin/infection --test-framework=phpunit --min-msi=50 --min-covered-msi=70 --ignore-msi-with-no-mutations --ansi -s
+RUN echo ">>> Test" && \
+    composer check
