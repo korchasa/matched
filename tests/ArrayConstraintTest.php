@@ -16,7 +16,7 @@ class ArrayConstraintTest extends TestCase
             $constraint->evaluate(['foo' => 'bar2']);
             $this->fail('Test must fail on second symbol');
         } catch (ExpectationFailedException $e) {
-            $this->assertEquals(
+            $this->assertStringStartsWith(
                 <<<TEXT
 Given value has no key `baz`
 --- Pattern
@@ -26,8 +26,6 @@ Given value has no key `baz`
 -  'foo' => 'bar***',
 -  'baz' => 42,
 +  'foo' => 'bar2',
- )
-
 TEXT
                 ,
                 $e->getMessage()
